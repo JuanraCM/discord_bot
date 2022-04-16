@@ -1,5 +1,6 @@
 require 'discordrb'
 require 'yaml'
+require 'erb'
 require 'ostruct'
 
 Dir.glob("#{File.dirname(__FILE__)}/commands/*").each do |file_path|
@@ -13,6 +14,8 @@ class DiscordBot
   # Constructor principal del bot
   # Inicializa el cliente y carga los comandos
   def initialize(opts = {})
+    @production_mode = opts.fetch(:production_mode, false)
+
     prefix  = opts.fetch(:prefix, '!')
     @client = Discordrb::Commands::CommandBot.new token: config.bot_token, prefix: prefix
 
@@ -45,9 +48,9 @@ class DiscordBot
     #
     # @return [OpenStruct]
     def config
-      @config ||= OpenStruct.new YAML::load(File.read("#{File.dirname(__FILE__)}/config.yml"))
+      @config ||= OpenStruct.new YAML::load(ERB.new(File.read("#{File.dirname(__FILE__)}/config_#{@production_mode ? 'production' : 'development'}.yml")).result)
     rescue Errno::ENOENT
-      p "Config file missing (src/config.yml)"
+      p "Config file missing!"
       exit
     end
 end

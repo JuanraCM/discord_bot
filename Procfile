@@ -1,1 +1,1 @@
-worker: ruby src/main.rb
+worker: ruby src/main.rb --production
