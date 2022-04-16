@@ -6,6 +6,14 @@ module Commands
     include CommandBase
 
     # :no-doc:
+    def self.config
+      {
+        description: 'Comando de prueba'
+      }
+    end
+
+
+    # :no-doc:
     def execute
       'Pong!'
     end

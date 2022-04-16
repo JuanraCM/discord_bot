@@ -10,12 +10,11 @@ end
 #
 class DiscordBot
 
-
   # Constructor principal del bot
   # Inicializa el cliente y carga los comandos
   def initialize(opts = {})
     prefix  = opts.fetch(:prefix, '!')
-    @client = Discordrb::Commands::CommandBot.new token: credentials.bot_token, prefix: prefix
+    @client = Discordrb::Commands::CommandBot.new token: config.bot_token, prefix: prefix
 
     read_commands
   end
@@ -35,17 +34,20 @@ class DiscordBot
         command_class = Object.const_get("Commands::#{command_const}")
         command_name  = command_const.to_s.downcase.to_sym
 
-        @client.command command_name, command_class.config do |event|
-          command_class.new(@client).execute
+        @client.command command_name, command_class.config do |*args|
+          command_class.new(args, config).execute
         end
       end
     end
 
 
-    # Devuelve las credenciales para autenticar el bot
+    # Devuelve la configuración del bot
     #
-    # @return [String]
-    def credentials
-      @credentials ||= OpenStruct.new YAML::load(File.read("#{File.dirname(__FILE__)}/credentials.yml"))
+    # @return [OpenStruct]
+    def config
+      @config ||= OpenStruct.new YAML::load(File.read("#{File.dirname(__FILE__)}/config.yml"))
+    rescue Errno::ENOENT
+      p "Config file missing (src/config.yml)"
+      exit
     end
 end

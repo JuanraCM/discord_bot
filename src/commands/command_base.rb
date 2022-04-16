@@ -2,7 +2,7 @@
 #
 module CommandBase
 
-  # Notificación de comando registrado
+  # :no-doc:
   def self.included(klass)
     klass.extend(ClassMethods)
 
@@ -13,8 +13,11 @@ module CommandBase
 
 
   # Constructor del comando
-  def initialize(client)
-    @client = client
+  # @param event_args [Array] Argumentos de la llamada al bot
+  # @param bot_config [OpenStruct] Objeto con los parámetros de configuración del bot
+  def initialize(event_args, bot_config)
+    @event_args = event_args
+    @bot_config = bot_config
   end
 
 
