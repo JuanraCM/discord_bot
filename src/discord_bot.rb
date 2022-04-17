@@ -2,6 +2,8 @@ require 'discordrb'
 require 'yaml'
 require 'erb'
 require 'ostruct'
+require 'bundler/setup'
+Bundler.require(:development)
 
 Dir.glob("#{File.dirname(__FILE__)}/commands/*").each do |file_path|
   require_relative file_path
@@ -37,7 +39,7 @@ class DiscordBot
         command_class = Object.const_get("Commands::#{command_const}")
         command_name  = command_const.to_s.downcase.to_sym
 
-        @client.command command_name, command_class.config do |*args|
+        @client.command command_name, command_class.setup do |*args|
           command_class.new(args, config).execute
         end
       end
@@ -48,9 +50,14 @@ class DiscordBot
     #
     # @return [OpenStruct]
     def config
-      @config ||= OpenStruct.new YAML::load(ERB.new(File.read("#{File.dirname(__FILE__)}/config_#{@production_mode ? 'production' : 'development'}.yml")).result)
+      unless @config
+        file_path = "#{File.dirname(__FILE__)}/config_#{@production_mode ? 'production' : 'development'}.yml"
+        @config   = OpenStruct.new YAML::load(ERB.new(File.read(file_path)).result)
+      end
+
+      @config
     rescue Errno::ENOENT
-      p "Config file missing!"
+      p "Config file missing! path= #{file_path}"
       exit
     end
 end

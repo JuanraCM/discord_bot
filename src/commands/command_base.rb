@@ -31,9 +31,20 @@ module CommandBase
   # :no-doc:
   module ClassMethods
     
+    # Macro para configurar el comando
+    def configure
+      config_to_merge = OpenStruct.new
+      yield config_to_merge
+
+      setup.merge! config_to_merge.to_h
+    end
+
+
     # Hash de configuración del comando
-    def config
-      {}
+    #
+    # @return [Hash]
+    def setup
+      @setup ||= {}
     end
   end
 end
