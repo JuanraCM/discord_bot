@@ -5,11 +5,8 @@ module Commands
   class Ping
     include CommandBase
 
-    # :no-doc:
-    def self.config
-      {
-        description: 'Comando de prueba'
-      }
+    configure do |config|
+      config.description = 'Comando de prueba'
     end
 
 

@@ -13,16 +13,12 @@ module Commands
     ROOM_BG_COLOR   = '#808080'.freeze
     ROOM_BG_OPACITY = '100'.freeze
 
-    # :no-doc:
-    def self.config
-      {
-        min_args: 1,
-        max_args: 1,
-        description: 'Crea una sala de Watch2Gether dada la URL de un vídeo',
-        usage: '!watchtogether [url]'
-      }
+    configure do |config|
+      config.min_args    = 1
+      config.max_args    = 1
+      config.description = 'Crea una sala de Watch2Gether dada la URL de un vídeo'
+      config.usage       = '!watchtogether [url]'
     end
-
 
     # Genera una sala de Watch2Gether con la URL dada
     def execute
