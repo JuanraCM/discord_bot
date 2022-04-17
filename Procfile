@@ -1,1 +1,1 @@
-worker: ruby src/main.rb --production
+worker: bundle exec ruby src/main.rb --production
