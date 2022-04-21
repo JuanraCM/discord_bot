@@ -1,2 +1,5 @@
 bot_token:          <%= ENV['BOT_TOKEN'] %>
 watch2gether_token: <%= ENV['WATCH2GETHER_TOKEN'] %>
+imgflip_account:
+  username: <%= ENV['IMGFLIP_USERNAME'] %>
+  password: <%= ENV['IMGFLIP_PASSWORD'] %>

@@ -52,7 +52,7 @@ class DiscordBot
     def config
       unless @config
         file_path = "#{File.dirname(__FILE__)}/config_#{@production_mode ? 'production' : 'development'}.yml"
-        @config   = OpenStruct.new YAML::load(ERB.new(File.read(file_path)).result)
+        @config   = JSON.parse YAML::load(ERB.new(File.read(file_path)).result).to_json, :object_class => OpenStruct
       end
 
       @config
