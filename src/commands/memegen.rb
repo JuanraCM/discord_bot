@@ -2,7 +2,8 @@ require 'open-uri'
 
 require_relative 'command_base'
 
-# Comando de pruebas !ping
+# Comando !memegen
+# Genera un meme según parámetros dados
 module Commands
   class Memegen
     include CommandBase
