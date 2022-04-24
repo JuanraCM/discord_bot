@@ -43,6 +43,7 @@ GEM
     websocket-client-simple (0.5.1)
       event_emitter
       websocket
+    zeitwerk (2.5.4)
 
 PLATFORMS
   x86_64-linux
@@ -50,6 +51,7 @@ PLATFORMS
 DEPENDENCIES
   discordrb
   pry-byebug
+  zeitwerk
 
 RUBY VERSION
    ruby 3.0.0p0

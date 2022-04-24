@@ -1,1 +1,1 @@
-worker: bundle exec ruby src/main.rb --production
+worker: rake bot
