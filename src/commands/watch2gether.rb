@@ -1,8 +1,6 @@
 require 'net/http'
 require 'json'
 
-require_relative 'command_base'
-
 # Comando !watchtogether
 # Crea una sala de Watch2Gether dada una URL
 module Commands

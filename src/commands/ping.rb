@@ -1,5 +1,3 @@
-require_relative 'command_base'
-
 # Comando de pruebas !ping
 module Commands
   class Ping

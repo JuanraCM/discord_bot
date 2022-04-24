@@ -1,7 +1,5 @@
 require 'open-uri'
 
-require_relative 'command_base'
-
 # Comando !memegen
 # Genera un meme según parámetros dados
 module Commands

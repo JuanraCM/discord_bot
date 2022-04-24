@@ -1,25 +1,18 @@
-require 'discordrb'
 require 'yaml'
 require 'erb'
 require 'ostruct'
-require 'bundler/setup'
-Bundler.require(:development)
-
-Dir.glob("#{File.dirname(__FILE__)}/commands/*").each do |file_path|
-  require_relative file_path
-end
 
 # Clase principal, encargada de cargar los comandos del bot e iniciar el proceso
 #
 class DiscordBot
 
+  COMMANDS_PREFIX = '!'.freeze
+
   # Constructor principal del bot
   # Inicializa el cliente y carga los comandos
   def initialize(opts = {})
-    @production_mode = opts.fetch(:production_mode, false)
-
-    prefix  = opts.fetch(:prefix, '!')
-    @client = Discordrb::Commands::CommandBot.new token: config.bot_token, prefix: prefix
+    @production_mode = ENV['RUBY_ENV'] == 'production'
+    @client          = Discordrb::Commands::CommandBot.new token: config.bot_token, prefix: COMMANDS_PREFIX
 
     read_commands
   end
