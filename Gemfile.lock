@@ -31,6 +31,7 @@ GEM
     pry-byebug (3.9.0)
       byebug (~> 11.0)
       pry (~> 0.13.0)
+    rake (13.0.6)
     rest-client (2.1.0)
       http-accept (>= 1.7.0, < 2.0)
       http-cookie (>= 1.0.2, < 2.0)
@@ -51,6 +52,7 @@ PLATFORMS
 DEPENDENCIES
   discordrb
   pry-byebug
+  rake
   zeitwerk
 
 RUBY VERSION
