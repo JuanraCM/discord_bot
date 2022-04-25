@@ -2,6 +2,8 @@
 #
 module CommandBase
 
+  attr_reader :event
+
   # :no-doc:
   def self.included(klass)
     klass.extend(ClassMethods)
@@ -13,17 +15,15 @@ module CommandBase
 
 
   # Constructor del comando
-  # @param event_args [Array] Argumentos de la llamada al bot
-  # @param bot_config [OpenStruct] Objeto con los parámetros de configuración del bot
-  def initialize(event_args, bot_config)
-    @event_args = event_args
-    @bot_config = bot_config
+  # @param event [Discordrb::Commands::CommandEvent] Evento recibido
+  def initialize(event)
+    @event = event
   end
 
 
   # Método base a sobreescribir por todos los comandos
-  # Lógica principal del comando
-  def execute
+  # Punto de partida del proceso de ejecución del comando
+  def execute(*args)
     raise NotImplementedError
   end
 

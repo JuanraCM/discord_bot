@@ -43,7 +43,10 @@ class DiscordBot
         command_name  = command_const.to_s.downcase.to_sym
 
         @client.command command_name, command_class.setup do |*args|
-          command_class.new(args, credentials).execute
+          event        = args.first
+          command_args = args.drop(1)
+
+          command_class.new(event).execute(*command_args)
         end
       end
     end
