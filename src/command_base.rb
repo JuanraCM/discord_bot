@@ -1,4 +1,5 @@
 # Módulo que actúa a modo de interfaz para definir comandos
+# @attr event [Discordrb::Commands::CommandEvent] Evento de la invocación del comando
 #
 module CommandBase
 
@@ -23,6 +24,7 @@ module CommandBase
 
   # Método base a sobreescribir por todos los comandos
   # Punto de partida del proceso de ejecución del comando
+  # @param args [Array] Argumentos recibidos
   def execute(*args)
     raise NotImplementedError
   end

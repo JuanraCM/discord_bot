@@ -16,8 +16,8 @@ module Commands
     end
 
 
-    # Método principal, genera un meme con los parámetros dados o responde
-    # a comandos adicionales (ver #list)
+    # Método principal, genera un meme con los parámetros dados o responde, a comandos adicionales (ver #list)
+    # @param query_args [Array] Argumentos para generar el meme separados por un token (PARAMS_SEPARATOR)
     def execute(*query_args)
       query_or_command = query_args.join(' ').split(PARAMS_SEPARATOR)
 
@@ -34,7 +34,7 @@ module Commands
 
       # Genera un meme dados unos parámetros
       # TODO: Implementar parámetros dinámicos para memes con más de 2 cajas de texto
-      # @param [Array] Argumentos para generar el meme
+      # @param query_args [Array] Argumentos para generar el meme
       def generate_meme(query_args)
         template_id, text_0, text_1 = query_args
 
@@ -66,7 +66,7 @@ module Commands
 
 
       # Método auxiliar para enviar el meme al canal
-      # @param [Hash] Respuesta del API con la URL del meme generado
+      # @param meme_data [Hash] Respuesta del API con la URL del meme generado
       def send_meme(meme_data)
         meme_url        = URI(meme_data['url'])
         attachment      = File.new(meme_url.open)
