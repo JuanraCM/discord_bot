@@ -8,5 +8,5 @@ loader.push_dir("#{File.dirname(__FILE__)}/src")
 loader.setup
 
 task :bot do
-  DiscordBot.new.run
+  DiscordBot.run!
 end

@@ -16,12 +16,10 @@ module Commands
     end
 
 
-    # Método principal, genera un meme con los parámetros dados o responde
-    # a comandos adicionales (ver #list)
-    def execute
-      @event, args = @event_args[0], @event_args[1..-1].join(' ')
-
-      query_or_command = args.split(PARAMS_SEPARATOR)
+    # Método principal, genera un meme con los parámetros dados o responde, a comandos adicionales (ver #list)
+    # @param query_args [Array] Argumentos para generar el meme separados por un token (PARAMS_SEPARATOR)
+    def execute(*query_args)
+      query_or_command = query_args.join(' ').split(PARAMS_SEPARATOR)
 
       if query_or_command.count == 1
         command = query_or_command.first
@@ -36,13 +34,14 @@ module Commands
 
       # Genera un meme dados unos parámetros
       # TODO: Implementar parámetros dinámicos para memes con más de 2 cajas de texto
-      # @param [Array] Argumentos para generar el meme
+      # @param query_args [Array] Argumentos para generar el meme
       def generate_meme(query_args)
         template_id, text_0, text_1 = query_args
 
-        params = {
-          'username': @bot_config.imgflip_account.username,
-          'password': @bot_config.imgflip_account.password,
+        imgflip_credentials = DiscordBot.credentials.imgflip_account
+        params              = {
+          'username': imgflip_credentials.username,
+          'password': imgflip_credentials.password,
           'template_id': template_id,
           'text0': text_0,
           'text1': text_1
@@ -59,7 +58,7 @@ module Commands
       #
       # @return [String] Mensaje de información de proceso terminado
       def list
-        current_user = @event.user
+        current_user = event.user
         fetch_available_memes.each { |message| current_user.dm.send_message message }
 
         "Te he enviado los memes disponibles por MD #{current_user.mention}"
@@ -67,13 +66,13 @@ module Commands
 
 
       # Método auxiliar para enviar el meme al canal
-      # @param [Hash] Respuesta del API con la URL del meme generado
+      # @param meme_data [Hash] Respuesta del API con la URL del meme generado
       def send_meme(meme_data)
         meme_url        = URI(meme_data['url'])
         attachment      = File.new(meme_url.open)
         attachment_name = meme_url.to_s.split('/').last
 
-        @event.send_file attachment, filename: attachment_name
+        event.send_file attachment, filename: attachment_name
       end
 
 

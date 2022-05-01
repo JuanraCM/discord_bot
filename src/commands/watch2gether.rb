@@ -19,11 +19,10 @@ module Commands
     end
 
     # Genera una sala de Watch2Gether con la URL dada
-    def execute
-      event, url = @event_args
-
-      if valid_url?(url)
-        "Aqui tienes tu sala de Watch2Gether: #{create_room(url)}"
+    # @param video_url [String] Url del vídeo
+    def execute(video_url)
+      if valid_url?(video_url)
+        "Aqui tienes tu sala de Watch2Gether: #{create_room(video_url)}"
       else
         "Introduce una URL válida"
       end
@@ -33,14 +32,14 @@ module Commands
     private
 
       # Valida el formato de la URL dada como parámetro
-      # @param [String] Url del vídeo
+      # @param video_url [String] Url del vídeo
       def valid_url?(video_url)
         video_url =~ URI::regexp
       end
 
 
       # Crea una sala de Watch2Gether
-      # @param [String] Url del vídeo
+      # @param video_url [String] Url del vídeo
       #
       # @return [String] Url de la sala creada
       def create_room(video_url)
@@ -50,7 +49,7 @@ module Commands
         }
 
         data = {
-          'w2g_api_key': @bot_config.watch2gether_token,
+          'w2g_api_key': DiscordBot.credentials.watch2gether_token,
           'share': video_url,
           'bg_color': '#808080',
           'bg_opacity': '100'
